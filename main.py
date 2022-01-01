@@ -60,7 +60,7 @@ def main(_argv):
         config.gpu_options.allow_growth = True
         session = InteractiveSession(config=config)
 
-    # load all the models
+    # load in all the models
     saved_model_loaded_ball = tf.saved_model.load(weights_ball, tags=[tag_constants.SERVING])
     infer_ball = saved_model_loaded_ball.signatures['serving_default']
     pattern_model = load_model(pattern_model)
@@ -73,7 +73,7 @@ def main(_argv):
     except:
         vid = cv2.VideoCapture(video_path) # else - video input
 
-    # get os resolution
+    # get os resolution for display purpose
     image_width, image_height = int(vid.get(3)), int(vid.get(4))
     if image_width > 1280:
         image_width = 1280
@@ -95,8 +95,7 @@ def main(_argv):
         demo_out = cv2.VideoWriter(demo_output, codec, fps, (image_width,image_height))
         ascreen_out = cv2.VideoWriter(ascreen_output, codec, fps, (image_width,image_height))
 
-    # initialize variable for detection
-    tracker = Tracker()
+    tracker = Tracker() # initialize tracker
     ptns = []
 
     # start capturing and detection
@@ -114,7 +113,7 @@ def main(_argv):
             print("Video processing complete")
             break
 
-        # video proprocess
+        # video preprocess
         frame_size = frame.shape[:2]
         image_data = cv2.resize(frame, (input_size, input_size))
         image_data = image_data / 255.
@@ -151,7 +150,10 @@ def main(_argv):
 
 
         # perform unbound tracking
-        tracker.track(frame, pred_bbox)
+        pair_ball = tracker.track(frame, pred_bbox)
+        bound_ball = mapping(pair_ball, [right_palm,left_palm],True)
+        tracker.object_checking(bound_ball)
+
         bound_ball = mapping(tracker.pair_ball, [right_palm,left_palm])
         bound_ball_copy = copy.deepcopy(bound_ball)
         ascreen = analysis(tracker.pair_ball, ascreen)
