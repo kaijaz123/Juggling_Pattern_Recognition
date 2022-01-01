@@ -9,32 +9,48 @@ from core.analysis import analysis
 from core.pattern import pattern_recognition
 
 def euclidean_distance(x1,y1,x2,y2):
+    # euclidean distance formula
     x = x2 - x1
     y = y2 - y1
     distance = int(math.sqrt((x**2) + (y**2)))
     return distance
 
 def update_record(ptns):
-    record_window = 4
+    record_window = 4 # max record can be displayed
     if len(ptns) > record_window:
         # update pattern list to display latest result
         ptns = ptns[1:]
     return ptns
 
-def mapping(pair_ball, pair_palm):
-    threshold = 55
+def mapping(pair_ball, pair_palm, centroid_trace=False):
+    threshold = 55 # distance threshold
     bound_ball = []
     hand_dis = []
 
     # map hands and balls
     for ball in pair_ball:
         for palm in pair_palm:
-            distance = euclidean_distance(ball["centroid_point"][0], ball["centroid_point"][1], palm[0], palm[1])
+            if centroid_trace:
+                distance = euclidean_distance(ball[0],ball[1],palm[0],palm[1])
+            else:
+                distance = euclidean_distance(ball["centroid_point"][0], ball["centroid_point"][1], palm[0], palm[1])
             hand_dis.append([distance,[palm[0],palm[1]],palm[-1]])
 
         # make sure there are hands detected
         if len(hand_dis) > 0:
             shortest = min(hand_dis)
+
+            # mapping for centroid pair ball
+            if centroid_trace:
+                if shortest[0] <= threshold:
+                    ball.append(True)
+                    ball.append(shortest[-1])
+                    bound_ball.append(ball)
+                    continue
+                bound_ball.append(ball)
+                continue
+
+            # mapping for existing pair ball
             if shortest[0] <= threshold:
                 ball["state"] = "bound"
                 ball["hand_xy"].append(shortest[1])
@@ -46,7 +62,7 @@ def mapping(pair_ball, pair_palm):
                     ball['hand_seq'] = [shortest[-1]]
                 ball["state"] = "unbound"
 
-        # reset hand distance for next ball
+        # clear hand distance for next ball
         hand_dis = []
     return bound_ball
 
