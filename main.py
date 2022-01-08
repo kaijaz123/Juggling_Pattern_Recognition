@@ -15,6 +15,7 @@ from tensorflow.keras.models import load_model
 from core.utils import *
 from centroid_tracking.tracker import Tracker
 from core.analysis import analysis
+from core.analysis import create_dashboard
 from core.posemodule import poseDetector
 import tkinter as tk
 
@@ -32,7 +33,6 @@ flags.DEFINE_float('score', 0.30, 'score threshold')
 flags.DEFINE_string('output_format', 'XVID', 'codec used in VideoWriter when saving video to file')
 flags.DEFINE_string('output', 'output.avi', 'path to output video')
 flags.DEFINE_string('demo_output', 'demo.avi', 'path to demo output video')
-flags.DEFINE_string('ascreen_output', 'ascreen.avi', 'path to ascreen video')
 flags.DEFINE_string('ptn_model', 'checkpoints/pattern_model.h5', 'path to pattern recognition model')
 flags.DEFINE_boolean('gpu', True, 'activate gpu - True else False')
 
@@ -48,7 +48,6 @@ def main(_argv):
     pattern_model = FLAGS.ptn_model
     output = FLAGS.output
     demo_output = FLAGS.demo_output
-    ascreen_output = FLAGS.ascreen_output
     output_format = FLAGS.output_format
 
     if gpu:
@@ -75,25 +74,20 @@ def main(_argv):
 
     # get os resolution for display purpose
     image_width, image_height = int(vid.get(3)), int(vid.get(4))
-    if image_width > 1280:
-        image_width = 1280
-        image_height = 720
-
     root = tk.Tk()
     screen_height = root.winfo_screenheight()
     screen_width = root.winfo_screenwidth()
-    rw, rh = 1920, 0
-    aw, ah = 2560, (screen_height // 2) + 50
-    sw, sh = 2880, 0
+    if image_width > screen_width: # prevent oversize video
+        image_width = 1280
+        image_height = 720
 
     # initialize video writer
     if output:
         # fps = int(vid.get(cv2.CAP_PROP_FPS))
-        fps = 30
+        fps = 20
         codec = cv2.VideoWriter_fourcc(*output_format)
         out = cv2.VideoWriter(output, codec, fps, (image_width,image_height))
         demo_out = cv2.VideoWriter(demo_output, codec, fps, (image_width,image_height))
-        ascreen_out = cv2.VideoWriter(ascreen_output, codec, fps, (image_width,image_height))
 
     tracker = Tracker() # initialize tracker
     ptns = []
@@ -105,9 +99,7 @@ def main(_argv):
             # simulation frame
             frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
             frame = cv2.resize(frame, (image_width,image_height))
-            frame2 = frame.copy()
             demo = np.zeros((image_height, image_width, 3), np.uint8)
-            ascreen = np.zeros((image_height, image_width, 3), np.uint8)
             image = Image.fromarray(frame)
         else:
             print("Video processing complete")
@@ -144,20 +136,21 @@ def main(_argv):
         # human pose estimation
         demo = pose_detector.findPose(frame, demo)
         lmList = pose_detector.findPosition(demo, draw=False)
-        demo = pose_detector.find_Elbow_angle(demo)
-        demo = pose_detector.distance_estimation(demo)
         right_palm, left_palm = pose_detector.findPalm()
-
 
         # perform unbound tracking
         pair_ball = tracker.track(frame, pred_bbox)
         bound_ball = mapping(pair_ball, [right_palm,left_palm],True)
         tracker.object_checking(bound_ball)
-
         bound_ball = mapping(tracker.pair_ball, [right_palm,left_palm])
         bound_ball_copy = copy.deepcopy(bound_ball)
-        ascreen = analysis(tracker.pair_ball, ascreen)
         unbound_results = classification(frame, bound_ball, tracker.prev_pair_ball, tracker.pair_ball, pattern_model)
+
+        # analysis result and display on dashboard
+        frame = create_dashboard(frame)
+        frame = analysis(tracker.pair_ball, frame)
+        frame = pose_detector.distance_estimation(frame)
+        frame, dmeo = pose_detector.find_Elbow_angle(frame, demo)
 
         # perform bound tracking
         demo, pred_balls = tracker.bound_tracking(demo, unbound_results, bound_ball_copy)
@@ -175,38 +168,20 @@ def main(_argv):
         image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
         re_image = cv2.resize(image, ((screen_width // 4) - 140, (screen_height // 2) - 80))
         re_demo = cv2.resize(demo, ((screen_width // 4) - 140, (screen_height // 2) - 80))
-        re_ascreen = cv2.resize(ascreen, ((screen_width // 4) - 140, screen_height // 2 - 80))
         print("FPS: %.2f" % exec_time)
         print()
         print()
 
-        # cv2 setting the window
-        cv2.namedWindow("frame")
-        # cv2.namedWindow("frame2")
-        cv2.namedWindow("simulation")
-        # cv2.namedWindow("ascreen")
-
-        cv2.moveWindow("frame", -1520, 0)
-        # cv2.moveWindow("frame2", 0, 0)
-        cv2.moveWindow("simulation", 0, 0)
-        # cv2.moveWindow("ascreen", aw, ah)
-
         cv2.imshow("frame", image)
-        # cv2.imshow("frame2", frame2)
         cv2.imshow("simulation", demo)
-        # cv2.imshow("ascreen", ascreen)
         if cv2.waitKey(1) & 0xFF == ord('q'): break
 
         # save the videos
         if output:
-            frame2 = cv2.cvtColor(frame2, cv2.COLOR_BGR2RGB)
             out.write(image)
 
         if demo_output:
             demo_out.write(demo)
-
-        if ascreen_output:
-            ascreen_out.write(ascreen)
 
 if __name__ == '__main__':
     try:
