@@ -30,6 +30,7 @@ class poseDetector():
         self.y = [20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100]
         self.coefficient = np.polyfit(self.x,self.y,2)
 
+
     def findPose(self, img, demo, draw=True):
         imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         self.results = self.pose.process(img)
@@ -63,8 +64,19 @@ class poseDetector():
         degree = rad * 180 / math.pi
         return 450 - degree if degree > 90 else 90 - degree
 
-    def find_Elbow_angle(self, image):
+    def find_Elbow_angle(self, image, demo):
         if len(self.lmList) < 1: return image
+
+        # resolution settings for put text
+        image_h, image_w = image.shape[:2]
+        x_diff = (0.65 * (image_h+image_w)//4)
+        y_diff = (0.6 * (image_h+image_w)//40)
+        pos_x = (int(image_w-x_diff+(x_diff/1.7)))
+        pos_y = (image_h//35)+y_diff*3
+
+        # font settings
+        font_size = (0.1 * (image_h+image_w)/400)
+        scale = int(0.3 * (image_h+image_w)//600)
 
         # calculate for left and right elblow angle
         left_shoulder, left_elbow, left_wrist = self.lmList[11], self.lmList[13], self.lmList[15]
@@ -74,14 +86,14 @@ class poseDetector():
 
         # display on image
         image_h, image_w = image.shape[:2]
-        cv2.putText(image, "Left Elbow Angle: {}".format(str("{:.2f}".format(left_elbow_angle))), (10, image_h-50),
-                    cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0,0,255), 2, cv2.LINE_AA)
-        cv2.putText(image, "Right Elbow Angle: {}".format(str("{:.2f}".format(right_elbow_angle))), (10, image_h-20),
-                    cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0,0,255), 2, cv2.LINE_AA)
+        cv2.putText(image, "{}".format(str("{:.2f}".format(left_elbow_angle))), (int(pos_x), int(pos_y)),
+                    cv2.FONT_HERSHEY_SIMPLEX, font_size, (255,255,255), scale, cv2.LINE_AA)
+        cv2.putText(image, "{}".format(str("{:.2f}".format(right_elbow_angle))), (int(pos_x), int(pos_y+y_diff)),
+                    cv2.FONT_HERSHEY_SIMPLEX, font_size, (255,255,255), scale, cv2.LINE_AA)
 
-        cv2.circle(image, (right_elbow[1], right_elbow[2]), 15, (0, 0, 255), cv2.FILLED)
-        cv2.circle(image, (left_elbow[1], left_elbow[2]), 15, (0, 0, 255), cv2.FILLED)
-        return image
+        cv2.circle(demo, (right_elbow[1], right_elbow[2]), 15, (0, 0, 255), cv2.FILLED)
+        cv2.circle(demo, (left_elbow[1], left_elbow[2]), 15, (0, 0, 255), cv2.FILLED)
+        return image, demo
 
     def findPalm(self):
         if len(self.lmList) <1: return [],[]
@@ -111,6 +123,17 @@ class poseDetector():
     def distance_estimation(self, frame):
         if len(self.lmList) <1: return frame
 
+        # resolution settings for put text
+        image_h, image_w = frame.shape[:2]
+        x_diff = (0.65 * (image_h+image_w)//4)
+        y_diff = (0.6 * (image_h+image_w)//40)
+        pos_x = (int(image_w-x_diff+(x_diff/1.7)))
+        pos_y = (image_h//35)+y_diff*2
+
+        # font settings
+        font_size = (0.1 * (image_h+image_w)/400)
+        scale = int(0.3 * (image_h+image_w)//600)
+
         # use left hand as a reference for measurement
         left_pinky = self.lmList[12]
         left_index = self.lmList[11]
@@ -126,10 +149,10 @@ class poseDetector():
         estimated_distance_cm = A * scaled_distance ** 2 + B * scaled_distance + C
         distance_m = estimated_distance_cm / 100
 
-        # display the distance on frame
+        # display the distance
         h,w = frame.shape[:2]
-        cv2.putText(frame, "Distance to camera: {}m".format(str("{:.2f}".format(distance_m))), (w - 320, 40),
-                    cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0,0,255), 2, cv2.LINE_AA)
+        cv2.putText(frame, "{}m".format(str("{:.2f}".format(distance_m))), (int(pos_x), int(pos_y)),
+                    cv2.FONT_HERSHEY_SIMPLEX, font_size, (255,255,255), scale, cv2.LINE_AA)
 
         return frame
 
