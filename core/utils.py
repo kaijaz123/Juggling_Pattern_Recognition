@@ -2,6 +2,7 @@ import cv2
 import math
 import numpy as np
 import copy
+import tkinter as tk
 from core.simulation import display_demo_ball
 from core.simulation import display_demo_pattern
 from core.simulation import display_demo_palm
@@ -138,3 +139,24 @@ def draw_bbox(image, bound_ball_pair, pair_ball, pair_palm):
         cv2.putText(image, "palm", (int(palm[2][0]), int(palm[2][1])+10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,0), int(0.6 * (image_h + image_w) / 600))
 
     return image
+
+def resolution_display(vid_cap):
+    root = tk.Tk()
+    os_width = root.winfo_screenwidth()
+    os_height = root.winfo_screenheight()
+    vid_width, vid_height = int(vid_cap.get(3)), int(vid_cap.get(4))
+
+    # divide into half - one for output result and another for demo result
+    rescale_width = os_width // 2
+    rescale_height = int((os_height // 2) + os_height*0.05)
+
+    # do nothing if video size is smaller than the rescale
+    if (vid_width+vid_height) < (rescale_width+rescale_height):
+        rescale_width = vid_width
+        rescale_height = vid_height
+
+    # rescale to fixed (16:9) res to prevent oversize video
+    if vid_width > os_width:
+        vid_width, vid_height = 1280, 720
+
+    return rescale_width, rescale_height, vid_width, vid_height
