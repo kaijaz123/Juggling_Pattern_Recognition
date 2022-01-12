@@ -73,17 +73,10 @@ def main(_argv):
         vid = cv2.VideoCapture(video_path) # else - video input
 
     # get os resolution for display purpose
-    image_width, image_height = int(vid.get(3)), int(vid.get(4))
-    root = tk.Tk()
-    screen_height = root.winfo_screenheight()
-    screen_width = root.winfo_screenwidth()
-    if image_width > screen_width: # prevent oversize video
-        image_width = 1280
-        image_height = 720
+    rescale_width, rescale_height, image_width, image_height = resolution_display(vid)
 
     # initialize video writer
     if output:
-        # fps = int(vid.get(cv2.CAP_PROP_FPS))
         fps = 20
         codec = cv2.VideoWriter_fourcc(*output_format)
         out = cv2.VideoWriter(output, codec, fps, (image_width,image_height))
@@ -166,14 +159,17 @@ def main(_argv):
         curr_time = time.time()
         exec_time = 1.0 / (curr_time - prev_time)
         image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
-        re_image = cv2.resize(image, ((screen_width // 4) - 140, (screen_height // 2) - 80))
-        re_demo = cv2.resize(demo, ((screen_width // 4) - 140, (screen_height // 2) - 80))
+        re_image = cv2.resize(image, (rescale_width,rescale_height))
+        re_demo = cv2.resize(demo, (rescale_width,rescale_height))
         print("FPS: %.2f" % exec_time)
         print()
         print()
 
-        cv2.imshow("frame", image)
-        cv2.imshow("simulation", demo)
+        # set the position for output and demo result window
+        cv2.imshow("output", re_image)
+        cv2.imshow("demo", re_demo)
+        cv2.moveWindow("output", 0, 0)
+        cv2.moveWindow("demo", int(rescale_width), 0)
         if cv2.waitKey(1) & 0xFF == ord('q'): break
 
         # save the videos
