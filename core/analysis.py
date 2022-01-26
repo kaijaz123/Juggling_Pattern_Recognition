@@ -70,7 +70,7 @@ def analysis(pair_ball, frame):
     line_type = cv2.LINE_AA
 
     for ball in pair_ball:
-        if ball["frequency"] > 1 or len(ball["trace"]) < 2: continue
+        if len(ball["trace"]) < 2 or ball["frequency"] > 1: continue
         # ball number
         ball_count += 1
 
