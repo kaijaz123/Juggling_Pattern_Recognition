@@ -127,6 +127,7 @@ def p2_track(location, ball_pair, bound_ball_pair, frame):
 
     for ball in predict_balls:
         location.append(ball["trace"][-1])
-        cv2.circle(frame, np.array(ball["centroid_point"]).astype(int), 15, (67,211,255), thickness = cv2.FILLED)
+        ball["colors"] = (67,211,255)
+        cv2.circle(frame, np.array(ball["centroid_point"]).astype(int), 15, ball["colors"], thickness = cv2.FILLED)
 
     return frame, predict_balls, location, ball_pair
