@@ -9,8 +9,8 @@ from core.utils import euclidean_distance
 import string
 
 """
-    Unbound ball state - the ball is tossed into the air (siteswap notation 3 - C)
-    Bound ball state - the ball is hold on hand (siteswap notation 1 - 2)
+    Unbound ball state - the ball is tossed into the air (siteswap notation 1 - 8 except 2)
+    Bound ball state - the ball is hold on hand (siteswap 2)
 
     The following tracking algorithm is made up of Centroid Tracking algorithm
     which track by the geometric distance between objects. Besides, the algorithm
@@ -201,17 +201,26 @@ class Tracker:
 
 
     def object_checking(self, centroids):
+        """
+            opt for different tracking progress
+            1. no objects detected - check for frequency
+            2. if existing pair ball is empty - initialization
+            3. else goes into tracking process
+        """
         num_centroid = len(centroids)
         num_pair = len(self.pair_ball)
 
+        # if no objects detected
         if num_centroid < 1:
             # make sure there are existing pair
             if num_pair > 0:
                 self.frequency_checking()
 
+        # first frame tracking - initialization
         elif num_pair < 1:
             self.ff_object_tracking(centroids)
 
+        # else unbound ball pair tracking
         else:
             self.unbound_tracking(centroids)
 
@@ -235,6 +244,7 @@ class Tracker:
         for centroid in centroids:
             for ball in self.pair_ball:
                 # check collinearity
+                axis = 1
                 collinear = self.collinearity_checking(centroid,ball)
 
                 # centroid pair ball check
@@ -251,10 +261,11 @@ class Tracker:
                         axis_distance = abs(ball["trace"][-1][0] - centroid[0])
 
                     if axis_distance >= 20: axis_distance = 0
+                    if ball["axis"] != None: axis = 0
                     geo_distance = euclidean_distance(ball["centroid_point"][0], ball["centroid_point"][1], centroid[0], centroid[1])
                     distance = geo_distance - axis_distance
                     match_distance.append([distance, ball["ID"], centroid[0], centroid[1], centroid[2], centroid[3], centroid[4],
-                                           centroid[5], centroid])
+                                           centroid[5], centroid, axis])
 
         print("Match distance")
         print(match_distance)
@@ -263,7 +274,8 @@ class Tracker:
         for index in range(len(self.pair_ball)):
             if len(match_distance) < 1: break
 
-            shortest_pair = min(match_distance, key = lambda x:x[0])
+            # shortest_pair = min(match_distance, key = lambda x:x[0])
+            shortest_pair = sorted(match_distance, key = lambda x:(x[-1],x[0]))[0]
             # get the matched pair ball ID and centroid ID
             centroid_ID = shortest_pair[-2]
             pair_ball_ID = shortest_pair[1]
@@ -273,7 +285,7 @@ class Tracker:
 
             # remove shortest pair from match_distance and centroids
             [match_distance.remove(pair) for pair in match_distance[:] if pair[-2] == centroid_ID or pair[1] == pair_ball_ID]
-            centroids.remove(shortest_pair[-1])
+            centroids.remove(shortest_pair[-2])
 
             # update pair ball with the matched centroid
             for pair_ball in self.pair_ball:
