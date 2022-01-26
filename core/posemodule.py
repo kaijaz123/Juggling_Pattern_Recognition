@@ -32,10 +32,12 @@ class poseDetector():
 
 
     def findPose(self, img, demo, draw=True):
-        imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        sucess = False
         self.results = self.pose.process(img)
-        if self.results.pose_landmarks is None: return demo
+        if self.results.pose_landmarks is None:
+            return sucess, demo
 
+        sucess = True
         self.landmark = self.results.pose_landmarks.landmark
         if self.results.pose_landmarks:
             if draw:
@@ -43,7 +45,7 @@ class poseDetector():
                                            self.mpPose.POSE_CONNECTIONS,
                                            landmark_drawing_spec=self.mp_drawing_styles.get_default_pose_landmarks_style())
 
-        return demo
+        return sucess, demo
 
     def findPosition(self, img, draw=True):
         self.lmList = []
