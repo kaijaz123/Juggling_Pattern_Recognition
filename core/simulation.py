@@ -33,7 +33,7 @@ def display_demo_palm(demo, palm):
 def display_demo_ball(demo, ball):
     # draw simulation for balls
     traces = np.array(ball["trace"])
-    # draw only 8 points, prevent chaos display on simulation
+    # draw only 8 points, prevent information overloaded
     if len(traces) > 8:
         traces = traces[len(traces)-8:]
     for index,_ in enumerate(traces):
