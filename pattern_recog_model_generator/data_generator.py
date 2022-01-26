@@ -24,8 +24,6 @@ class data_generator:
         distance between both hands
         0 means catch the ball with same hand, 1 means different hand
         """
-        # same_amt = self.data_size * (2/3) - 1400
-        # diff_amt = self.data_size * (1/3) + 1400
         same_amt = self.data_size // 2
         diff_amt = self.data_size // 2
         same_hand = np.array([0 for count in range(int(same_amt))])
@@ -40,18 +38,7 @@ class data_generator:
         data format - [hand_level,bally_distance, ballx_distance, pattern]
         * hands_level will be stacked up later from the generate_hands_level func
         """
-        # size = self.data_size // 9
         size = self.data_size // 8
-        # p1 = np.array([[random.uniform(0,0.06),random.uniform(30.0,150.0),0] for count in range(size)])
-        # p2 = np.array([[random.uniform(0,0.05),random.uniform(0,5.0),1] for count in range(size)])
-        # p3 = np.array([[random.uniform(0.08,0.30),random.uniform(40.0,200.0),2] for count in range(size)])
-        # p4 = np.array([[random.uniform(0.14,0.35),random.uniform(0,30.0),3] for count in range(size)])
-        # p5 = np.array([[random.uniform(0.35,0.57),random.uniform(40.0,200.0),4] for count in range(size)])
-        # p6 = np.array([[random.uniform(0.40,0.62),random.uniform(0,30.0),5] for count in range(size)])
-        # p7 = np.array([[random.uniform(0.65,1.0),random.uniform(40.0,200.0),6] for count in range(size)])
-        # p8 = np.array([[random.uniform(0.68,1.0),random.uniform(0,30.0),7] for count in range(size)])
-        # pNone = np.array([[random.uniform(0,0.11),random.uniform(8.0,50.0),8] for count in range(size)])
-        # ball_patterns = np.vstack((p2,p4,p6,p8,pNone,p1,p3,p5,p7))
         p1 = np.array([[random.uniform(0,0.06),random.uniform(30.0,150.0),0] for count in range(size)])
         p3 = np.array([[random.uniform(0.08,0.31),random.uniform(40.0,200.0),1] for count in range(size)])
         p4 = np.array([[random.uniform(0.14,0.40),random.uniform(0,120.0),2] for count in range(size)])
