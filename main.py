@@ -88,93 +88,99 @@ def main(_argv):
     # start capturing and detection
     while True:
         return_value, frame = vid.read()
-        if return_value:
-            # simulation frame
-            frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-            frame = cv2.resize(frame, (image_width,image_height))
-            demo = np.zeros((image_height, image_width, 3), np.uint8)
-            image = Image.fromarray(frame)
-        else:
+        if not return_value:
             print("Video processing complete")
-            break
+            os._exit(0)
 
-        # video preprocess
-        frame_size = frame.shape[:2]
-        image_data = cv2.resize(frame, (input_size, input_size))
-        image_data = image_data / 255.
-        image_data = image_data[np.newaxis, ...].astype(np.float32)
-        prev_time = time.time()
-
-        # capture the detection box
-        batch_data = tf.constant(image_data)
-        pred_bbox_ball = infer_ball(batch_data)
-        for key, value in pred_bbox_ball.items():
-            boxes_ball = value[:, :, 0:4]
-            pred_conf_ball = value[:, :, 4:]
-
-        # non max suppression
-        boxes, scores, classes, valid_detections = tf.image.combined_non_max_suppression(
-            boxes=tf.reshape(boxes_ball, (tf.shape(boxes_ball)[0], -1, 1, 4)),
-            scores=tf.reshape(
-                pred_conf_ball, (tf.shape(pred_conf_ball)[0], -1, tf.shape(pred_conf_ball)[-1])),
-            max_output_size_per_class=50,
-            max_total_size=50,
-            iou_threshold=iou,
-            score_threshold=score
-        )
-
-        # finalized pred bbox
-        pred_bbox = [boxes.numpy(), scores.numpy(), classes.numpy(), valid_detections.numpy()]
+        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        frame = cv2.resize(frame, (image_width,image_height))
+        demo = np.zeros((image_height, image_width, 3), np.uint8)
+        prev_time = time.time() # fps counting
 
         # human pose estimation
-        demo = pose_detector.findPose(frame, demo)
-        lmList = pose_detector.findPosition(demo, draw=False)
-        right_palm, left_palm = pose_detector.findPalm()
+        sucess, demo = pose_detector.findPose(frame, demo)
+        # run the detection only if human pose found
+        if sucess:
+            lmList = pose_detector.findPosition(demo, draw=False)
+            right_palm, left_palm = pose_detector.findPalm()
 
-        # perform unbound tracking
-        pair_ball = tracker.track(frame, pred_bbox)
-        bound_ball = mapping(pair_ball, [right_palm,left_palm],True)
-        tracker.object_checking(bound_ball)
-        bound_ball = mapping(tracker.pair_ball, [right_palm,left_palm])
-        bound_ball_copy = copy.deepcopy(bound_ball)
-        unbound_results = classification(frame, bound_ball, tracker.prev_pair_ball, tracker.pair_ball, pattern_model)
+            # ball detection
+            image_data = cv2.resize(frame, (input_size, input_size))
+            image_data = image_data / 255.
+            image_data = image_data[np.newaxis, ...].astype(np.float32)
 
-        # analysis result and display on dashboard
-        frame = create_dashboard(frame)
-        frame = analysis(tracker.pair_ball, frame)
-        frame = pose_detector.distance_estimation(frame)
-        frame, dmeo = pose_detector.find_Elbow_angle(frame, demo)
+            # capture the detection box
+            batch_data = tf.constant(image_data)
+            pred_bbox_ball = infer_ball(batch_data)
+            for key, value in pred_bbox_ball.items():
+                boxes_ball = value[:, :, 0:4]
+                pred_conf_ball = value[:, :, 4:]
 
-        # perform bound tracking
-        demo, pred_balls = tracker.bound_tracking(demo, unbound_results, bound_ball_copy)
-        bound_results = classification(frame, pred_balls, tracker.prev_pair_ball, tracker.pair_ball, pattern_model)
-        results = unbound_results + bound_results
-        bound_ball.extend(pred_balls)
+            # non max suppression
+            boxes, scores, classes, valid_detections = tf.image.combined_non_max_suppression(
+                boxes=tf.reshape(boxes_ball, (tf.shape(boxes_ball)[0], -1, 1, 4)),
+                scores=tf.reshape(
+                    pred_conf_ball, (tf.shape(pred_conf_ball)[0], -1, tf.shape(pred_conf_ball)[-1])),
+                max_output_size_per_class=50,
+                max_total_size=50,
+                iou_threshold=iou,
+                score_threshold=score
+            )
 
-        # display result - simulation and draw bbox on frame
-        demo, ptns = display_demo(demo, results, ptns, bound_ball, tracker.pair_ball, [right_palm,left_palm])
-        image = draw_bbox(frame, bound_ball, tracker.pair_ball, [right_palm,left_palm])
+            # finalized pred bbox
+            pred_bbox = [boxes.numpy(), scores.numpy(), classes.numpy(), valid_detections.numpy()]
 
-        # display frame
-        curr_time = time.time()
-        exec_time = 1.0 / (curr_time - prev_time)
-        image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
-        re_image = cv2.resize(image, (rescale_width,rescale_height))
-        re_demo = cv2.resize(demo, (rescale_width,rescale_height))
-        print("FPS: %.2f" % exec_time)
-        print()
-        print()
+            # perform unbound tracking
+            pair_ball = tracker.track(frame, pred_bbox)
+            bound_ball = mapping(pair_ball, [right_palm,left_palm],True)
+            tracker.object_checking(bound_ball)
+            bound_ball = mapping(tracker.pair_ball, [right_palm,left_palm])
+            bound_ball_copy = copy.deepcopy(bound_ball)
+            unbound_results = classification(frame, bound_ball, tracker.prev_pair_ball, tracker.pair_ball, pattern_model)
+
+            # analysis result and display on dashboard
+            frame = create_dashboard(frame)
+            frame = analysis(tracker.pair_ball, frame)
+            frame = pose_detector.distance_estimation(frame)
+            frame, dmeo = pose_detector.find_Elbow_angle(frame, demo)
+
+            # perform bound tracking
+            demo, pred_balls = tracker.bound_tracking(demo, unbound_results, bound_ball_copy)
+            bound_results = classification(frame, pred_balls, tracker.prev_pair_ball, tracker.pair_ball, pattern_model)
+            results = unbound_results + bound_results
+            bound_ball.extend(pred_balls)
+
+            # display result - simulation and draw bbox on frame
+            demo, ptns = display_demo(demo, results, ptns, bound_ball, tracker.pair_ball, [right_palm,left_palm])
+            frame = draw_bbox(frame, bound_ball, tracker.pair_ball, [right_palm,left_palm])
+
+            # display frame
+            frame = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
+            re_frame = cv2.resize(frame, (rescale_width,rescale_height))
+            re_demo = cv2.resize(demo, (rescale_width,rescale_height))
 
         # set the position for output and demo result window
-        cv2.imshow("output", re_image)
-        cv2.imshow("demo", re_demo)
+        if sucess:
+            cv2.imshow("output", re_frame)
+            cv2.imshow("demo", re_demo)
+        else:
+            frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+            cv2.imshow("output", frame)
+            cv2.imshow("demo", demo)
         cv2.moveWindow("output", 0, 0)
         cv2.moveWindow("demo", int(rescale_width), 0)
         if cv2.waitKey(1) & 0xFF == ord('q'): break
 
-        # save the videos
+        # printout fps
+        curr_time = time.time()
+        exec_time = 1.0 / (curr_time - prev_time)
+        print("FPS: %.2f" % exec_time)
+        print()
+        print()
+
+        # save both output and demo results
         if output:
-            out.write(image)
+            out.write(frame)
 
         if demo_output:
             demo_out.write(demo)
