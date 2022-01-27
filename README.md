@@ -7,7 +7,7 @@ as my Final-Year-Project (FYP). This repository provides the real time balls det
 # Main Contents:
 * Utilized You-Only-Look-Once (YOLO) for ball detection.
 * Utilized mediapipe for human pose estimation.
-* Tensorflow framework for juggling siteswap notation classification.
+* Tensorflow framework to build a model for classification of juggling siteswap notation.
 
 # Getting Started (tested on Ubuntu 18.04 & Windows)
 It is recommended to have tensorflow with GPU support for faster inference time (higher framerate) while running the program. Please do follow the installation step from NVIDIA to install CUDA and CUDNN into your system.
