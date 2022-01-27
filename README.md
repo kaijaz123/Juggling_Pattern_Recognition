@@ -45,10 +45,10 @@ https://user-images.githubusercontent.com/49195906/151335388-9a8c4243-baa5-4e90-
 2. ```bound_tracking.py```: Tracking algoithm for bound object (balls).
 
 ## core/
-1. ```analysis.py```: Dashboard creation and the analysis of player's performance.
-2. ```pattern.py```: Recognize siteswap notation/pattern.
+1. ```analysis.py```: Script for dashboard creation and the analysis of player's performance.
+2. ```pattern.py```: Script for recognize siteswap notation/pattern.
 3. ```posemodule.py```: Script for human pose estimation.
-4. ```simulation.py```: Display the simulation frames along with the human pose, balls, and recognized siteswap notation/pattern.
+4. ```simulation.py```: Script for displaying the simulation frames along with the human pose, balls, and recognized siteswap notation/pattern.
 5. ```utils.py```: Contains functions that will call the scripts above.
 
 ## pattern_recog_model_generator/
