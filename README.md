@@ -8,4 +8,4 @@ as my Final-Year-Project (FYP). This repository provides the real time balls det
 It is recommended to have tensorflow with GPU support for faster inference time while running the program. Please do follow the step from NVIDIA to install CUDA and CUDNN into your system.
 
 Please install the following necessary packages in python3.7 or higher virtual environment:
-"." Tensorflow
+*.* Tensorflow
