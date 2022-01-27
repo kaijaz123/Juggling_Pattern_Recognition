@@ -46,6 +46,8 @@ https://user-images.githubusercontent.com/49195906/151335388-9a8c4243-baa5-4e90-
 ## centroid tracking/
 1. ```tracker.py```: Tracker class. Implemented centroid tracking algorithm and customized for this project usecase.
 2. ```bound_tracking.py```: Tracking algoithm for bound object (balls).
+3. ```classes.names```: YOLO class name.
+4. ```config.py```: YOLO properties config file.
 
 ## core/
 1. ```analysis.py```: Script for dashboard creation and the analysis of player's performance.
