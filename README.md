@@ -19,7 +19,7 @@ Please install the following necessary packages in python3.7 or higher virtual e
 * matplotlib
 
 
-# Output and details
+# Result and details
 Output | Simulation
 --- | ---
 ![](https://user-images.githubusercontent.com/49195906/151332629-1c43b810-8451-4a01-9552-7c1a19804311.png) | ![](https://user-images.githubusercontent.com/49195906/151332456-56745ab9-e879-466c-aacc-f5eb204439d9.png)
@@ -27,8 +27,9 @@ Output | Simulation
 * Balls with red bounding box covered is in unbound state which means its not grapsed in hand. 
 * Balls with green bounding box covered is in bound state which means its grapsed in hand.
 * **Simulation** image shows the human pose estimation along with the recognized pattern on the top left.
-* Each pattern is identified as the same colors of the balls.
+* Each recognized pattern is identified as the same colors of the balls.
 
+## Sample video results
 ![image](https://user-images.githubusercontent.com/49195906/151332629-1c43b810-8451-4a01-9552-7c1a19804311.png)
 
 
