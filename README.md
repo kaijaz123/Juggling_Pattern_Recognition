@@ -20,8 +20,10 @@ Please install the following necessary packages in python3.7 or higher virtual e
 
 
 # Output and details
-https://user-images.githubusercontent.com/49195906/151332219-36ad1d34-9f5e-43ac-899b-8ddf76452a21.mp4
+![image](https://user-images.githubusercontent.com/49195906/151332629-1c43b810-8451-4a01-9552-7c1a19804311.png)
 
+
+![image](https://user-images.githubusercontent.com/49195906/151332456-56745ab9-e879-466c-aacc-f5eb204439d9.png)
 
 
 
