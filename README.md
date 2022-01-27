@@ -30,7 +30,7 @@ Output | Simulation
 * Balls with red bounding box covered is in unbound state which means its not grapsed in hand. 
 * Balls with green bounding box covered is in bound state which means its grapsed in hand.
 * **Simulation** image shows the human pose estimation along with the recognized pattern on the top left.
-* Each recognized pattern is identified as the same colors of the balls.
+* Each recognized pattern is identified as the same color of the ball.
 
 ## Sample video results
 
