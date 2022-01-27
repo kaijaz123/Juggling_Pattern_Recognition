@@ -25,7 +25,7 @@ Please install the following necessary packages in python3.7 (or higher version)
 * matplotlib
 
 
-# Result and details
+# Results and details
 Output | Simulation
 --- | ---
 ![](https://user-images.githubusercontent.com/49195906/151332629-1c43b810-8451-4a01-9552-7c1a19804311.png) | ![](https://user-images.githubusercontent.com/49195906/151332456-56745ab9-e879-466c-aacc-f5eb204439d9.png)
