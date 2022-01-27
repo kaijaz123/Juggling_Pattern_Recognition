@@ -1,5 +1,5 @@
 # Juggling_Pattern_Recognition
 
 # Introduction
-The project provides juggling siteswap pattern recognition in either real-time or video format. The code was written and serves
-as my Final-Year-Project (FYP). This repository aims to recognize the siteswap notation/pattern from notation 0 - notation 8. 
+The project provides juggling pattern recognition in either real-time or video format. The code was written and serves
+as my Final-Year-Project (FYP). This repository provides the real time balls detection and human pose estimation as well as common classification of **SITESWAP** notation from notaion 1 to notation 8.
