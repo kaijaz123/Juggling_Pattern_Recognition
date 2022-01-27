@@ -10,7 +10,7 @@ as my Final-Year-Project (FYP). This repository provides the real time balls det
 # Getting Started (tested on Ubuntu 18.04 & Windows)
 It is recommended to have tensorflow with GPU support for faster inference time (higher framerate) while running the program. Please do follow the installation step from NVIDIA to install CUDA and CUDNN into your system.
 
-Please install the following necessary packages in python3.7 or higher virtual environment:
+Please install the following necessary packages in python3.7 (or higher version) virtual environment:
 * tensorflow-gpu/tensorflow-cpu (2.2 or higher)
 * keras (2.3.1 or higher)
 * mediapipe (0.8.9 or higher)
