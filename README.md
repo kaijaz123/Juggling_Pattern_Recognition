@@ -51,6 +51,9 @@ https://user-images.githubusercontent.com/49195906/151335388-9a8c4243-baa5-4e90-
 ## pattern_recog_model_generator/
 1. ```data_generator.py```: Generate training and testing data.
 2. ```model_train.py```: Build model and training script.
+3. ```pattern_model.h5```: Trained model.
+4. ```x.npz```: X dataset.
+5. ```y.npz```: Y dataset.
 
 ## src/
 1. Contains all the testing videos used in this project.
