@@ -30,10 +30,14 @@ Output | Simulation
 * Each recognized pattern is identified as the same colors of the balls.
 
 ## Sample video results
-![image](https://user-images.githubusercontent.com/49195906/151332629-1c43b810-8451-4a01-9552-7c1a19804311.png)
+
+https://user-images.githubusercontent.com/49195906/151335153-601dd7ab-f737-49ef-8171-a5d36c248f02.mp4
 
 
-![image](https://user-images.githubusercontent.com/49195906/151332456-56745ab9-e879-466c-aacc-f5eb204439d9.png)
+https://user-images.githubusercontent.com/49195906/151335388-9a8c4243-baa5-4e90-9a27-bd0aa51315c3.mp4
+
+
+
 
 
 
