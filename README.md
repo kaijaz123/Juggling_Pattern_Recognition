@@ -23,7 +23,7 @@ Please install the following necessary packages in python3.7 or higher virtual e
 Output | Simulation
 --- | ---
 ![](https://user-images.githubusercontent.com/49195906/151332629-1c43b810-8451-4a01-9552-7c1a19804311.png) | ![](https://user-images.githubusercontent.com/49195906/151332456-56745ab9-e879-466c-aacc-f5eb204439d9.png)
-* **Output** image shows the detected balls and palm along with the data dashboard on the top right which displays the analysis of player performance. 
+* **Output** image shows the detected balls along with the attached ID and palm along with the data dashboard on the top right which displays the analysis of player performance. 
 * Balls with red bounding box covered is in unbound state which means its not grapsed in hand. 
 * Balls with green bounding box covered is in bound state which means its grapsed in hand.
 * **Simulation** image shows the human pose estimation along with the recognized pattern on the top left.
