@@ -18,5 +18,16 @@ Please install the following necessary packages in python3.7 or higher virtual e
 * scikit-learn
 * matplotlib
 
+
+# Output and details
+https://user-images.githubusercontent.com/49195906/151332219-36ad1d34-9f5e-43ac-899b-8ddf76452a21.mp4
+
+
+
+
+
+
 # Scripts
 ## centroid tracking
+1. ```tracker.py```: Tracker class. Implemented centroid tracking algorithm and customized for this project usecase.
+2. ```bound_tracking.py```: Tracking algoithm for bound object (balls).
