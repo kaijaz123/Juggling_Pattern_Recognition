@@ -20,6 +20,8 @@ Please install the following necessary packages in python3.7 or higher virtual e
 
 
 # Output and details
+![alt-text-1](https://user-images.githubusercontent.com/49195906/151332629-1c43b810-8451-4a01-9552-7c1a19804311.png "title-1") ![alt-text-2](https://user-images.githubusercontent.com/49195906/151332456-56745ab9-e879-466c-aacc-f5eb204439d9.png "title-2")
+
 ![image](https://user-images.githubusercontent.com/49195906/151332629-1c43b810-8451-4a01-9552-7c1a19804311.png)
 
 
