@@ -36,14 +36,26 @@ https://user-images.githubusercontent.com/49195906/151335153-601dd7ab-f737-49ef-
 
 https://user-images.githubusercontent.com/49195906/151335388-9a8c4243-baa5-4e90-9a27-bd0aa51315c3.mp4
 
-
-
-
-
-
-
-
 # Scripts
-## centroid tracking
+## centroid tracking/
 1. ```tracker.py```: Tracker class. Implemented centroid tracking algorithm and customized for this project usecase.
 2. ```bound_tracking.py```: Tracking algoithm for bound object (balls).
+
+## core/
+1. ```analysis.py```: Dashboard creation and the analysis of player's performance.
+2. ```pattern.py```: Recognize siteswap notation/pattern.
+3. ```posemodule.py```: Scripts for human pose estimation.
+4. ```simulation.py```: Display the simulation frames along with the human pose, balls, and recognized siteswap notation/pattern.
+5. ```utils.py```: Contains functions that will call the scripts above.
+
+## pattern_recog_model_generator/
+1. ```data_generator.py```: Generate training and testing data.
+2. ```model_train.py```: Build model and training script.
+
+## src/
+1. Contains all the testing videos used in this project.
+
+## ./
+1. ```main.py```: Main program script.
+2. ```output.avi```: Output video.
+3. ```demo.avi```: Simulation video. 
