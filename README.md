@@ -17,3 +17,6 @@ Please install the following necessary packages in python3.7 or higher virtual e
 * tkinter
 * scikit-learn
 * matplotlib
+
+# Scripts
+## centroid tracking
