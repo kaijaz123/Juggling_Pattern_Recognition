@@ -72,7 +72,8 @@ https://user-images.githubusercontent.com/49195906/151335388-9a8c4243-baa5-4e90-
 3. ```demo.avi```: Simulation video result. 
 
 # Instructions 
-1. Please stand in a reasonable distance to laptop camera (or any other external connected camera), recommended 1-1.2 meter. The estimated distance is displayed in the data dashboard in output video.
-2. Currently supports only balls juggling and not more than 3 balls.
-3. Currently supports only siteswap notation 1 - 8 and some basic form of siteswap patterns, which variant of patterns are not recommended.
-4. Please prevent same color between clothes, balls, and background (also light background).
+1. A high quality camera is recommended to be used for capturing. You may also use phone camera or any external camera for better image quality hence improve the performance.
+2. Please stand in a reasonable distance to camera, recommended 1-1.2 meter. The estimated distance is displayed in the data dashboard in output video.
+3. Currently supports only balls juggling and not more than 3 balls.
+4. Currently supports only siteswap notation 1 - 8 and some basic form of siteswap patterns, which variant of patterns are not recommended.
+5. Please prevent same color between clothes, balls, and background (also light background).
