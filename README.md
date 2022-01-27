@@ -63,8 +63,8 @@ https://user-images.githubusercontent.com/49195906/151335388-9a8c4243-baa5-4e90-
 
 ## ./
 1. ```main.py```: Main program script.
-2. ```output.avi```: Output video.
-3. ```demo.avi```: Simulation video. 
+2. ```output.avi```: Output video result.
+3. ```demo.avi```: Simulation video result. 
 
 # Instructions 
 1. Please stand in a reasonable distance to laptop camera (or any other connected camera), recommended 1-1.2 meters. The estimated distance is displayed in the data dashboard in output video.
