@@ -68,6 +68,6 @@ https://user-images.githubusercontent.com/49195906/151335388-9a8c4243-baa5-4e90-
 
 # Instructions 
 1. Please stand in a reasonable distance to laptop camera (or any other connected camera), recommended 1-1.2 meters. The estimated distance is displayed in the data dashboard in output video.
-2. Currently supports only balls juggling and at most 3 balls juggling.
+2. Currently supports only balls juggling and not more than 3 balls juggling.
 3. Currently supports only basic form of juggling siteswap pattern, which variant of patterns are not recommended.
 4. Please prevent same color between clothes, balls, and background (also light background).
