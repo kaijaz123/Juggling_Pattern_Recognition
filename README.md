@@ -9,7 +9,8 @@ It is recommended to have tensorflow with GPU support for faster inference time 
 
 Please install the following necessary packages in python3.7 or higher virtual environment:
 * tensorflow-gpu/tensorflow-cpu (2.2 or higher)
-* mediapipe (8.10 or higher)
+* keras (2.3.1 or higher)
+* mediapipe (0.8.9 or higher)
 * pillow
 * cv2
 * numpy
