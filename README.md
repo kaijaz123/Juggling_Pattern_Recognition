@@ -34,7 +34,7 @@ Output | Simulation
 * Balls with green bounding box covered is in bound state which means its grasped in hand.
 * **Simulation** result shows the human pose estimation along with the recognized pattern on the top left.
 * Each recognized pattern is identified as the same color of the ball in the simulation result.
-* Height of ball in bound state will not be shown since its grasped in hand hence the height distance will be 0 as always.
+* Analysis of ball in bound state will not be shown in output result (since its grasped in hand hence height will be 0 as always) as well as will not be displayed in simulation result.
 * The results will be stored in video files as output.avi and demo.avi.
 
 ## Sample video results
