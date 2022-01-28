@@ -35,7 +35,7 @@ Output | Simulation
 * **Simulation** result shows the human pose estimation along with the recognized pattern on the top left.
 * Each recognized pattern is identified as the same color of the ball in the simulation result.
 * Height of ball in bound state will not be shown since its grasped in hand hence the height distance will be 0 as always.
-* The result will be stored in video file as output.avi and demo.avi.
+* The results will be stored in video files as output.avi and demo.avi.
 
 ## Sample video results
 
