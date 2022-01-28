@@ -38,12 +38,13 @@ Output | Simulation
 
 ## Sample video results
 
-https://user-images.githubusercontent.com/49195906/151335153-601dd7ab-f737-49ef-8171-a5d36c248f02.mp4
+https://user-images.githubusercontent.com/49195906/151481530-abf78e0f-8f41-4dd6-9f14-a7667b5238a8.mp4
 
 
-https://user-images.githubusercontent.com/49195906/151335388-9a8c4243-baa5-4e90-9a27-bd0aa51315c3.mp4
+https://user-images.githubusercontent.com/49195906/151481551-adebd255-7827-4bd7-ae9d-bc9b99b69914.mp4
 
 # Scripts
+
 ## centroid tracking/
 1. ```tracker.py```: Tracker class. Implemented centroid tracking algorithm and customized for this project usecase.
 2. ```bound_tracking.py```: Tracking algoithm for bound object (balls).
