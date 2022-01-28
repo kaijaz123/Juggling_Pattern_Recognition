@@ -51,11 +51,11 @@ def create_dashboard(frame):
 
     return frame
 
-def analysis(pair_ball, frame):
+def analysis(centroids, pair_ball, frame):
     # initialize variable
     image_h, image_w = frame.shape[:2]
     color = (255,255,255)
-    ball_count = 0
+    ball_count = len(centroids)
 
     # resolution settings for put text
     x_diff = (0.65 * (image_h+image_w)//4)
@@ -71,8 +71,6 @@ def analysis(pair_ball, frame):
 
     for ball in pair_ball:
         if len(ball["trace"]) < 2 or ball["frequency"] > 1: continue
-        # ball number
-        ball_count += 1
 
         # ball Id with height
         ball_pos = ball["centroid_point"]
