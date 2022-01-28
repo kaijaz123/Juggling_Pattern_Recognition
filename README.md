@@ -28,7 +28,7 @@ Please install the following necessary packages in python3.7 (or higher version)
 # Results and details
 Output | Simulation
 --- | ---
-![](https://user-images.githubusercontent.com/49195906/151332629-1c43b810-8451-4a01-9552-7c1a19804311.png) | ![](https://user-images.githubusercontent.com/49195906/151332456-56745ab9-e879-466c-aacc-f5eb204439d9.png)
+![](https://user-images.githubusercontent.com/49195906/151481221-cbd6c553-73d0-4a53-a5e7-80dd992abc51.png) | ![](https://user-images.githubusercontent.com/49195906/151481300-249c3443-b74d-401a-81bc-c916823dd0f1.png)
 * **Output** result shows the detected balls that attached with specific ID and palm along with the data dashboard on the top right which displays the analysis of player performance. 
 * Balls with red bounding box covered is in unbound state which means its not grasped in hand. 
 * Balls with green bounding box covered is in bound state which means its grasped in hand.
