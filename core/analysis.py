@@ -55,7 +55,7 @@ def analysis(centroids, pair_ball, frame):
     # initialize variable
     image_h, image_w = frame.shape[:2]
     color = (255,255,255)
-    ball_count = len(centroids) # detected ball
+    ball_count = len(centroids) # detected balls
 
     # resolution settings for put text
     x_diff = (0.65 * (image_h+image_w)//4)
