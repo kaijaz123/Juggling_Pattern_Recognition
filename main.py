@@ -140,7 +140,7 @@ def main(_argv):
 
             # analysis result and display on dashboard
             frame = create_dashboard(frame)
-            frame = analysis(tracker.pair_ball, frame)
+            frame = analysis(pair_ball, tracker.pair_ball, frame)
             frame = pose_detector.distance_estimation(frame)
             frame, dmeo = pose_detector.find_Elbow_angle(frame, demo)
 
