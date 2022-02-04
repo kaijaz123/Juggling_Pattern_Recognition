@@ -74,7 +74,7 @@ https://user-images.githubusercontent.com/49195906/151481551-adebd255-7827-4bd7-
 2. ```output.avi```: Output video result.
 3. ```demo.avi```: Simulation video result. 
 
-# Instructions 
+# Instructions ❗️❗️
 1. A high quality camera is recommended to be used for capturing. You may also use phone camera or any external camera for better image quality hence improve the performance.
 2. Please stand in a reasonable distance to camera, recommended 1-1.2 meter. The estimated distance is displayed in the data dashboard in output video.
 3. Currently supports only balls juggling and not more than 3 balls.
