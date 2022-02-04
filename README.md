@@ -4,7 +4,7 @@
 The project provides juggling pattern recognition in either real-time or video format. The code was written as part of my
 Final-Year-Project (FYP) thesis. This repository provides the real time balls detection and human pose estimation as well as common recognition of juggling **SITESWAP** notation from notation 1 to notation 8.
 
-# Main Contents:
+# Main Contents
 * Utilized You-Only-Look-Once (YOLO) for ball detection.
 * Utilized mediapipe for human pose estimation.
 * Tensorflow framework to build a model for classification of juggling siteswap notation.
@@ -44,6 +44,13 @@ https://user-images.githubusercontent.com/49195906/151481530-abf78e0f-8f41-4dd6-
 
 https://user-images.githubusercontent.com/49195906/151481551-adebd255-7827-4bd7-ae9d-bc9b99b69914.mp4
 
+# Instructions‼️‼️ 
+1. A high quality camera is recommended to be used for capturing. You may also use phone camera or any external camera for better image quality hence improve the performance.
+2. Please stand in a reasonable distance to camera, recommended 1-1.2 meter. The estimated distance is displayed in the data dashboard in output video.
+3. Currently supports only balls juggling and not more than 3 balls.
+4. Currently supports only siteswap notation 1 - 8 and some basic form of siteswap patterns, which variant of patterns are not recommended.
+5. Please prevent same color between clothes, balls, and background (also light background).
+
 # Scripts
 
 ## centroid tracking/
@@ -73,10 +80,3 @@ https://user-images.githubusercontent.com/49195906/151481551-adebd255-7827-4bd7-
 1. ```main.py```: Main program script.
 2. ```output.avi```: Output video result.
 3. ```demo.avi```: Simulation video result. 
-
-# Instructions‼️‼️ 
-1. A high quality camera is recommended to be used for capturing. You may also use phone camera or any external camera for better image quality hence improve the performance.
-2. Please stand in a reasonable distance to camera, recommended 1-1.2 meter. The estimated distance is displayed in the data dashboard in output video.
-3. Currently supports only balls juggling and not more than 3 balls.
-4. Currently supports only siteswap notation 1 - 8 and some basic form of siteswap patterns, which variant of patterns are not recommended.
-5. Please prevent same color between clothes, balls, and background (also light background).
