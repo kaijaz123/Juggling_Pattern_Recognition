@@ -30,8 +30,8 @@ Output | Simulation
 --- | ---
 ![](https://user-images.githubusercontent.com/49195906/151481221-cbd6c553-73d0-4a53-a5e7-80dd992abc51.png) | ![](https://user-images.githubusercontent.com/49195906/151481300-249c3443-b74d-401a-81bc-c916823dd0f1.png)
 * **Output** result shows the detected balls that attached with specific ID and palm along with the data dashboard on the top right which displays the analysis of player performance. 
-* Balls with red bounding box covered is in unbound state which means its not grasped in hand. 
-* Balls with green bounding box covered is in bound state which means its grasped in hand.
+* Balls with red bounding box covered is in unbound state which means its not being held in the hand. 
+* Balls with green bounding box covered is in bound state which means its held in the hand.
 * **Simulation** result shows the human pose estimation along with the recognized pattern on the top left.
 * Each recognized pattern is identified as the same color of the ball in the simulation result.
 * Analysis result of ball in bound state will not be shown in data dashboard output result (since its grasped in hand hence height will be 0 as always) as well as will not be displayed in simulation result.
