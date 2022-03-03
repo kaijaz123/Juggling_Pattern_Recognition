@@ -9,7 +9,6 @@ from tensorflow.keras.models import load_model
 from tensorflow.keras import regularizers
 from tensorflow.keras import metrics
 import argparse
-from data_generator import data_generator
 import numpy as np
 
 # add arg parser for command line interface
@@ -21,9 +20,11 @@ parser.add_argument('--bs', default = 8, type=int, help='batch size')
 parser.add_argument('--checkpoint', default = 'pattern_model.h5', type=str, help='path for model saving')
 parser.add_argument('--train', default = True, type=bool, help='train model')
 parser.add_argument('--test', default = True, type=bool, help='test model')
+parser.add_argument('--x_data' default = 'data/x.npy', type=str, help='x data file name')
+parser.add_argument('--y_data', default = 'data/y.npy', type=str, help='y data file name')
 
 class Model:
-    def __init__(self, loss, learning_rate, epochs, batch_size, model_filename):
+    def __init__(self, loss, learning_rate, epochs, batch_size, model_filename, x_file, y_file):
         # initialization
         self.loss = loss
         self.learning_rate = learning_rate
@@ -32,15 +33,15 @@ class Model:
         self.model_filename = model_filename
 
         # get data information
-        data = data_generator(12600) # number of generate data
-        data.generate_data()
-        self.x_train = data.x_train
-        self.x_test = data.x_test
-        self.y_train = data.y_train
-        self.y_test = data.y_test
+        self.data_loader(x_file, y_file)
 
         #build model
         self.build_model()
+
+    def data_loader(self, x_file, y_file):
+        x = np.load(x_file)
+        y = np.load(y_file)
+        self.x_train, self.x_test, self.y_train, self.y_test = train_test_split(x,y, test_size = 0.2, random_state = 10)
 
     def model_structure(self):
         input_shape = self.x_train.shape[1:]
@@ -95,7 +96,8 @@ class Model:
 if __name__ == "__main__":
     args = parser.parse_args()
     # define model
-    model = Model(loss = args.loss, learning_rate = args.lr, epochs = args.epochs, batch_size = args.bs, model_filename = args.checkpoint)
+    model = Model(loss = args.loss, learning_rate = args.lr, epochs = args.epochs, batch_size = args.bs, model_filename = args.checkpoint,
+                  x_file = args.x_data, y_file = args.y_data)
     if args.train:
         model.train_model()
     if args.test:
