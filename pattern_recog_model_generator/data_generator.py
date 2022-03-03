@@ -1,6 +1,7 @@
 import pandas as pd
 import random
 import numpy as np
+import joblib
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler
 from tensorflow.keras.utils import to_categorical
@@ -35,8 +36,7 @@ class data_generator:
     def generate_ball_pattern(self):
         """
         divide data size equally into 9 patterns
-        data format - [hand_level,bally_distance, ballx_distance, pattern]
-        * hands_level will be stacked up later from the generate_hands_level func
+        data format - [ballx_distance, distance between ball with hand, pattern]
         """
         size = self.data_size // 8
         p1 = np.array([[random.uniform(0,0.06),random.uniform(30.0,150.0),0] for count in range(size)])
@@ -55,6 +55,16 @@ class data_generator:
         # split into x and y
         X = data[:,:-1]
         y = data[:,-1]
+
+        # scale the data in x scale only the last column
+        # define scaler
+        scaler = MinMaxScaler()
+        scaled_data = scaler.fit_transform(X[:,-1,np.newaxis])[:,-1]
+        X[:,-1] = scaled_data # put the scaled data back in
+
+        # save the scaler for prediction use
+        scaler_filename = 'X_scaler.pkl'
+        joblib.dump(scaler, scaler_filename)
 
         # apply categorical transform
         y = to_categorical(y)
