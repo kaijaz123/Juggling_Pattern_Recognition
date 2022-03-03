@@ -29,8 +29,8 @@ Please install the following necessary packages in python3.7 (or higher version)
 Output | Simulation
 --- | ---
 ![](https://user-images.githubusercontent.com/49195906/151481221-cbd6c553-73d0-4a53-a5e7-80dd992abc51.png) | ![](https://user-images.githubusercontent.com/49195906/151481300-249c3443-b74d-401a-81bc-c916823dd0f1.png)
-* **Output** result shows the detected balls that attached with specific ID and palm along with the data dashboard on the top right which displays the analysis of player performance. 
-* Balls with red bounding box covered is in unbound state which means its not being held in the hand. 
+* **Output** result shows the detected balls that attached with specific ID and palm along with the data dashboard on the top right which displays the analysis of player performance.
+* Balls with red bounding box covered is in unbound state which means its not being held in the hand.
 * Balls with green bounding box covered is in bound state which means its held in the hand.
 * **Simulation** result shows the human pose estimation along with the recognized pattern on the top left.
 * Each recognized pattern is identified as the same color of the ball in the simulation result.
@@ -44,7 +44,7 @@ https://user-images.githubusercontent.com/49195906/151481530-abf78e0f-8f41-4dd6-
 
 https://user-images.githubusercontent.com/49195906/151481551-adebd255-7827-4bd7-ae9d-bc9b99b69914.mp4
 
-# Instructions‼️‼️ 
+# Instructions‼️‼️
 1. A high quality camera is recommended to be used for capturing. You may also use phone camera or any external camera for better image quality hence improve the performance.
 2. Please stand in a reasonable distance to camera, recommended 1-1.2 meter. The estimated distance is displayed in the data dashboard in output video.
 3. Currently supports only balls juggling and not more than 3 balls.
@@ -67,11 +67,10 @@ https://user-images.githubusercontent.com/49195906/151481551-adebd255-7827-4bd7-
 5. ```utils.py```: Contains functions that will call the scripts above.
 
 ## pattern_recog_model_generator/
-1. ```data_generator.py```: Generate training and testing data.
-2. ```model_train.py```: Build model and training script.
-3. ```pattern_model.h5```: Trained model.
-4. ```x.npz```: X dataset.
-5. ```y.npz```: Y dataset.
+1. ```model_train.py```: Build model and training script.
+2. ```pattern_model.h5```: Trained model.
+3. ```data/x.npz```: X dataset.
+4. ```data/y.npz```: Y dataset.
 
 ## src/
 1. Contains all the testing videos used in this project.
@@ -79,4 +78,4 @@ https://user-images.githubusercontent.com/49195906/151481551-adebd255-7827-4bd7-
 ## ./
 1. ```main.py```: Main program script.
 2. ```output.avi```: Output video result.
-3. ```demo.avi```: Simulation video result. 
+3. ```demo.avi```: Simulation video result.
