@@ -1,6 +1,7 @@
 import os
 os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 
+from sklearn.model_selection import train_test_split
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Flatten, Dropout, LeakyReLU
 from tensorflow.keras import optimizers
@@ -16,11 +17,11 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--loss', default = 'categorical_crossentropy', type=str, help='loss function to be used')
 parser.add_argument('--lr', default = 1, type=float, help='learning rate')
 parser.add_argument('--epochs', default = 20, type=int, help='epochs quantity')
-parser.add_argument('--bs', default = 8, type=int, help='batch size')
+parser.add_argument('--bs', default = 16, type=int, help='batch size')
 parser.add_argument('--checkpoint', default = 'pattern_model.h5', type=str, help='path for model saving')
 parser.add_argument('--train', default = True, type=bool, help='train model')
 parser.add_argument('--test', default = True, type=bool, help='test model')
-parser.add_argument('--x_data' default = 'data/x.npy', type=str, help='x data file name')
+parser.add_argument('--x_data', default = 'data/x.npy', type=str, help='x data file name')
 parser.add_argument('--y_data', default = 'data/y.npy', type=str, help='y data file name')
 
 class Model:
