@@ -8,11 +8,6 @@ def pattern_recognition(ball, image_w, image_h, model):
         return str(2)
 
     """data proprocessing"""
-    # calculate ball horizontal distance - x
-    x_min = np.amin(np.array(ball["trace"])[:,0])
-    x_max = np.amax(np.array(ball["trace"])[:,0])
-    ballx_distance = abs(x_max - x_min)
-
     # calculate ball vertical distance - y (height)
     h1_y = ball["trace"][0][1]
     h2_y = ball["trace"][-1][1]
@@ -30,16 +25,12 @@ def pattern_recognition(ball, image_w, image_h, model):
         hand_level = 1
 
     # pattern prediction
-    predict_item = np.array([[hand_level,bally_distance,ballx_distance]])
+    predict_item = np.array([[hand_level,bally_distance]])
     print(predict_item)
     y_pred = model.predict(predict_item)
     result = np.argmax(y_pred, axis=-1)
-    # print(result[0]+1)
-    # return str(result[0]+1)
+
     print(result[0]+2)
-    # if 9 - means wrong pattern
-    if result[0] == 7:
-        return None
     # 0 means 1
     if result[0] == 0:
         return str(result[0]+1)
